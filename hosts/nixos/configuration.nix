@@ -8,7 +8,6 @@
   ];
 
   networking.hostName = hostname;
-  i18n.defaultLocale = "en_US.UTF-8";
 
   system.stateVersion = stateVersion;
 }
