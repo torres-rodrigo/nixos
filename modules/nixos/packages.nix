@@ -31,6 +31,7 @@
     pwvucontrol # PipeWire volume control GUI
     qpwgraph # PipeWire graph patchbay
     ripgrep # grep replacement
+    starship # Fast cross-shell prompt
     statix # Lints Nix code and catches common issues
     unzip # ZIP archive extraction
     wget # File downloader
