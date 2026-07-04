@@ -11,6 +11,7 @@
     ../../modules/nixos/networking.nix
     ../../modules/nixos/nix-maintenance.nix
     ../../modules/nixos/packages.nix
+    ../../modules/nixos/storage.nix
     ../../modules/nixos/users.nix
   ];
 
