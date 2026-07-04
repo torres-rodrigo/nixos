@@ -9,6 +9,7 @@
     description = username;
     shell = pkgs.zsh;
     extraGroups = [
+      "audio"
       "networkmanager"
       "wheel"
     ];

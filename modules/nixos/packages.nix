@@ -2,6 +2,7 @@
 
 {
   environment.systemPackages = with pkgs; [
+    alsa-utils # ALSA command-line utilities
     bat # cat replacement
     btrfs-progs # Btrfs filesystem CLI utilities
     btop # Interactive TUI resource monitor
@@ -25,6 +26,10 @@
     nixfmt # Official formatter for Nix files
     nvd # Compares NixOS generation package versions
     openssh # SSH client
+    pamixer # PulseAudio/PipeWire command-line mixer
+    pavucontrol # PulseAudio/PipeWire volume control GUI
+    pwvucontrol # PipeWire volume control GUI
+    qpwgraph # PipeWire graph patchbay
     ripgrep # grep replacement
     statix # Lints Nix code and catches common issues
     unzip # ZIP archive extraction
