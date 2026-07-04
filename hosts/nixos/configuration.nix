@@ -6,6 +6,7 @@
     ../../modules/nixos/base.nix
     ../../modules/nixos/firewall.nix
     ../../modules/nixos/networking.nix
+    ../../modules/nixos/packages.nix
     ../../modules/nixos/users.nix
   ];
 
