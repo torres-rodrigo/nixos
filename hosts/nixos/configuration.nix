@@ -9,6 +9,7 @@
     ../../modules/nixos/firewall.nix
     ../../modules/nixos/home-manager.nix
     ../../modules/nixos/networking.nix
+    ../../modules/nixos/nix-maintenance.nix
     ../../modules/nixos/packages.nix
     ../../modules/nixos/users.nix
   ];
