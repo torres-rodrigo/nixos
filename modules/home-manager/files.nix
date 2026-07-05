@@ -5,6 +5,7 @@ let
     config.lib.file.mkOutOfStoreSymlink "${repoPath}/live/${path}";
 in
 {
+  home.file.".config/lazygit/config.yml".source = live "lazygit/config.yml";
   home.file.".config/mango/config.conf".source = live "mango/config.conf";
   home.file.".config/wezterm/wezterm.lua".source = live "wezterm/wezterm.lua";
   home.file.".config/zsh/.zprofile".source = live "zsh/.zprofile";

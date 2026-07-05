@@ -18,6 +18,7 @@
     fzf # Fuzzy finder
     git # Distributed version control system
     jq # JSON processor and pretty-printer
+    lazygit # Terminal UI for Git
     less # Pager
     mold # Modern high-speed linker
     ncdu # Interactive disk usage navigator
