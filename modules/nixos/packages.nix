@@ -35,5 +35,8 @@
     statix # Lints Nix code and catches common issues
     unzip # ZIP archive extraction
     wget # File downloader
+    zsh-autosuggestions # Fish-style inline command suggestions
+    zsh-completions # Extended zsh completion definitions
+    zsh-syntax-highlighting # Real-time command syntax colouring
   ];
 }

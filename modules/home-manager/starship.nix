@@ -1,13 +1,6 @@
 { ... }:
 
 {
-  programs.zsh = {
-    enable = true;
-    initContent = ''
-      eval "$(starship init zsh)"
-    '';
-  };
-
   xdg.configFile."starship/starship.toml".text = ''
     format = """\
     [╭─](bold 238)[ᚱ](bold #FF4450) $directory\

@@ -20,5 +20,11 @@
     wheelNeedsPassword = true;
   };
 
-  programs.zsh.enable = true;
+  programs.zsh = {
+    enable = true;
+    enableGlobalCompInit = false;
+    shellInit = ''
+      export ZDOTDIR="''${XDG_CONFIG_HOME:-$HOME/.config}/zsh"
+    '';
+  };
 }
