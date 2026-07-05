@@ -1,22 +1,19 @@
-{ pkgs, username, ... }:
-
-let
-  mangoSession = pkgs.writeShellScript "mango-session" ''
-    export XDG_CURRENT_DESKTOP=mango
-    export XDG_SESSION_DESKTOP=mango
-    export XDG_SESSION_TYPE=wayland
-
-    exec ${pkgs.dbus}/bin/dbus-run-session -- \
-      ${pkgs.mangowc}/bin/mango -c /home/${username}/.config/mango/config.conf
-  '';
-in
+{ lib, pkgs, username, ... }:
 
 {
   services.greetd = {
     enable = true;
     settings = {
       initial_session = {
-        command = "${mangoSession}";
+        command = lib.concatStringsSep " " [
+          "${pkgs.uwsm}/bin/uwsm"
+          "start"
+          "-F"
+          "--"
+          "/run/current-system/sw/bin/mango"
+          "-c"
+          "/home/${username}/.config/mango/config.conf"
+        ];
         user = username;
       };
     };
