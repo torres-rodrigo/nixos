@@ -19,6 +19,7 @@
     ../../modules/nixos/plymouth.nix
     ../../modules/nixos/storage.nix
     ../../modules/nixos/users.nix
+    ../../modules/nixos/wayland.nix
   ];
 
   networking.hostName = hostname;
