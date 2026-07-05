@@ -13,6 +13,7 @@
     ../../modules/nixos/greetd.nix
     ../../modules/nixos/hardware-intel.nix
     ../../modules/nixos/home-manager.nix
+    ../../modules/nixos/mango.nix
     ../../modules/nixos/networking.nix
     ../../modules/nixos/nix-maintenance.nix
     ../../modules/nixos/packages.nix
