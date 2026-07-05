@@ -34,6 +34,7 @@
     starship # Fast cross-shell prompt
     statix # Lints Nix code and catches common issues
     unzip # ZIP archive extraction
+    wezterm # GPU-accelerated terminal emulator
     wget # File downloader
     zsh-autosuggestions # Fish-style inline command suggestions
     zsh-completions # Extended zsh completion definitions

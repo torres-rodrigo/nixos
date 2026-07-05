@@ -14,7 +14,12 @@
     icons.enable = true;
     menus.enable = true;
     mime.enable = true;
-    terminal-exec.enable = true;
+    terminal-exec = {
+      enable = true;
+      settings.default = [
+        "org.wezfurlong.wezterm.desktop"
+      ];
+    };
 
     portal = {
       enable = true;

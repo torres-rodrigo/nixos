@@ -6,6 +6,7 @@ let
 in
 {
   home.file.".config/mango/config.conf".source = live "mango/config.conf";
+  home.file.".config/wezterm/wezterm.lua".source = live "wezterm/wezterm.lua";
   home.file.".config/zsh/.zprofile".source = live "zsh/.zprofile";
   home.file.".config/zsh/.zshenv".source = live "zsh/.zshenv";
   home.file.".config/zsh/.zshrc".source = live "zsh/.zshrc";
