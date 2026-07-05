@@ -1,0 +1,345 @@
+# DOOM Plymouth Theme Script
+
+global.background_visible = 0;
+global.fake_progress_limit = 0.7;
+global.fake_progress_duration = 15.0;
+global.fake_progress = 0.0;
+global.real_progress = 0.0;
+global.fake_progress_active = 0;
+global.animation_frame = 0;
+global.refresh_frame = 0;
+global.password_shown = 0;
+global.password_dialog_visible = 0;
+global.max_progress = 0.0;
+global.phrase_interval_frames = 350;
+global.phrase_frame_count = 0;
+global.phrase_initialized = 0;
+global.phrase_current_index = -1;
+global.phrase_order_position = -1;
+global.phrase_count = 15;
+
+fun refresh_callback ()
+  {
+    global.animation_frame++;
+    global.refresh_frame++;
+
+    if (global.password_dialog_visible == 1)
+      {
+        global.phrase_frame_count++;
+        if (global.phrase_frame_count >= global.phrase_interval_frames)
+          {
+            global.phrase_frame_count = 0;
+            show_random_phrase();
+          }
+      }
+
+    if (global.fake_progress_active == 1)
+      {
+        elapsed_time = global.animation_frame / 50.0;
+        time_ratio = elapsed_time / global.fake_progress_duration;
+        if (time_ratio > 1.0)
+          time_ratio = 1.0;
+
+        eased_ratio = 1 - ((1 - time_ratio) * (1 - time_ratio));
+        global.fake_progress = eased_ratio * global.fake_progress_limit;
+
+        update_progress_bar(global.fake_progress);
+      }
+  }
+
+Plymouth.SetRefreshFunction(refresh_callback);
+
+fun update_progress_bar(progress)
+  {
+    if (progress > global.max_progress)
+      {
+        global.max_progress = progress;
+        width = Math.Int(progress_bar.original_image.GetWidth() * progress);
+        if (width < 1)
+          width = 1;
+
+        progress_bar.image = progress_bar.original_image.Scale(width, progress_bar.original_image.GetHeight());
+        progress_bar.sprite.SetImage(progress_bar.image);
+      }
+  }
+
+fun show_progress_bar()
+  {
+    progress_box.sprite.SetOpacity(1);
+    progress_bar.sprite.SetOpacity(1);
+  }
+
+fun hide_progress_bar()
+  {
+    progress_box.sprite.SetOpacity(0);
+    progress_bar.sprite.SetOpacity(0);
+  }
+
+fun show_background()
+  {
+    if (global.background_visible == 0)
+      {
+        Window.SetBackgroundTopColor(0.101, 0.105, 0.149);
+        Window.SetBackgroundBottomColor(0.101, 0.105, 0.149);
+        global.background_visible = 1;
+      }
+  }
+
+fun show_password_dialog()
+  {
+    show_background();
+    global.password_dialog_visible = 1;
+
+    logo.sprite.SetOpacity(1);
+    phrase.sprite.SetOpacity(1);
+    if (global.phrase_initialized == 0)
+      {
+        show_random_phrase();
+        global.phrase_initialized = 1;
+      }
+
+    entry.sprite.SetOpacity(1);
+    lock.sprite.SetOpacity(1);
+  }
+
+fun hide_password_dialog()
+  {
+    global.password_dialog_visible = 0;
+    logo.sprite.SetOpacity(0);
+    phrase.sprite.SetOpacity(0);
+    entry.sprite.SetOpacity(0);
+    lock.sprite.SetOpacity(0);
+    for (index = 0; bullet.sprites[index]; index++)
+      bullet.sprites[index].SetOpacity(0);
+  }
+
+fun start_fake_progress()
+  {
+    if (global.max_progress == 0.0)
+      {
+        global.fake_progress = 0.0;
+        global.real_progress = 0.0;
+        update_progress_bar(0.0);
+      }
+
+    global.fake_progress_active = 1;
+    global.animation_frame = 0;
+  }
+
+fun stop_fake_progress()
+  {
+    global.fake_progress_active = 0;
+  }
+
+entry.image = Image("entry.png");
+lock.image = Image("lock.png");
+bullet.image = Image("bullet.png");
+logo.image = Image("doom-logo.png");
+
+entry.sprite = Sprite(entry.image);
+entry.x = Window.GetWidth() / 2 - entry.image.GetWidth() / 2;
+entry.y = Window.GetHeight() / 2 - entry.image.GetHeight() / 2 - 20;
+entry.sprite.SetPosition(entry.x, entry.y, 10001);
+entry.sprite.SetOpacity(0);
+
+max_logo_width = Window.GetWidth() - 80;
+if (logo.image.GetWidth() > max_logo_width)
+  {
+    logo_width = max_logo_width;
+    logo_height = Math.Int(logo.image.GetHeight() * logo_width / logo.image.GetWidth());
+    logo.image = logo.image.Scale(logo_width, logo_height);
+  }
+
+logo.sprite = Sprite(logo.image);
+logo.x = Window.GetWidth() / 2 - logo.image.GetWidth() / 2;
+logo.y = entry.y - logo.image.GetHeight() - 54;
+if (logo.y < 20)
+  logo.y = 20;
+logo.sprite.SetPosition(logo.x, logo.y, 10001);
+logo.sprite.SetOpacity(0);
+
+phrase.lines = [];
+phrase.lines[0] = "DOOM  OS  OF  MALEVOLENCE";
+phrase.lines[1] = "DOOM  OVERENGINEERED  OBSOLETE  MALWARE";
+phrase.lines[2] = "DAEMON  OVERRUN  OS  MALWARE";
+phrase.lines[3] = "DAEMONIZED  OS  OF  MAYHEM";
+phrase.lines[4] = "DOMINATION  OF  OPPRESSED  MINDS";
+phrase.lines[5] = "DOMINATION  OF  ONES  MIND";
+phrase.lines[6] = "DUCT-TAPED  OS  OF  MEDIOCRITY";
+phrase.lines[7] = "DOCUMENTATION  OBFUSCATED  OR  MISSING";
+phrase.lines[8] = "DOOMSCROLLING  OVER  OUTRAGE  MEDIA";
+phrase.lines[9] = "DOOMSCROLLING  OVER  ONGOING  MISINFORMATION";
+phrase.lines[10] = "DEPLOYING  OUTDATED  OBSOLETE  MODULES";
+phrase.lines[11] = "DEBUGGING  OUR  OWN  MADNESS";
+phrase.lines[12] = "DEPLOY  ONCE  OMIT  MISTAKES";
+phrase.lines[13] = "DESIGN  OVER  OPTIMIZED  MEANINGLESSLY";
+phrase.lines[14] = "DISCIPLINE  OVERCOMES  OUR  MIDIOCRITY";
+
+phrase.order = [];
+phrase.order[0] = 11;
+phrase.order[1] = 3;
+phrase.order[2] = 8;
+phrase.order[3] = 1;
+phrase.order[4] = 13;
+phrase.order[5] = 5;
+phrase.order[6] = 10;
+phrase.order[7] = 0;
+phrase.order[8] = 14;
+phrase.order[9] = 6;
+phrase.order[10] = 2;
+phrase.order[11] = 12;
+phrase.order[12] = 9;
+phrase.order[13] = 4;
+phrase.order[14] = 7;
+
+phrase.sprite = Sprite();
+phrase.sprite.SetOpacity(0);
+
+fun show_phrase(index)
+  {
+    global.phrase_current_index = index;
+
+    phrase.image = Image.Text(phrase.lines[index], 0.65, 0.89, 0.63);
+    phrase.sprite.SetImage(phrase.image);
+
+    phrase.x = logo.x + logo.image.GetWidth() / 2 - phrase.image.GetWidth() / 2;
+    phrase.y = logo.y + logo.image.GetHeight() + 14;
+    phrase.sprite.SetPosition(phrase.x, phrase.y, 10001);
+    phrase.sprite.SetOpacity(1);
+  }
+
+fun show_random_phrase()
+  {
+    if (global.phrase_order_position < 0)
+      {
+        seed = Window.GetWidth() + Window.GetHeight();
+        phrase_index_divisor = Math.Int(seed / global.phrase_count);
+        global.phrase_order_position = seed - phrase_index_divisor * global.phrase_count;
+      }
+    else
+      {
+        global.phrase_order_position++;
+        if (global.phrase_order_position >= global.phrase_count)
+          global.phrase_order_position = 0;
+      }
+
+    index = phrase.order[global.phrase_order_position];
+
+    show_phrase(index);
+  }
+
+lock_height = entry.image.GetHeight() * 1.15;
+lock_scale = lock_height / lock.image.GetHeight();
+lock_width = lock.image.GetWidth() * lock_scale;
+
+scaled_lock = lock.image.Scale(lock_width, lock_height);
+lock.sprite = Sprite(scaled_lock);
+lock.x = Window.GetWidth() / 2 - lock_width / 2;
+lock.y = entry.y + entry.image.GetHeight() + 22;
+lock.sprite.SetPosition(lock.x, lock.y, 10001);
+lock.sprite.SetOpacity(0);
+
+bullet.sprites = [];
+
+fun display_normal_callback ()
+  {
+    hide_password_dialog();
+
+    mode = Plymouth.GetMode();
+    if ((mode == "boot" || mode == "resume") && global.password_shown == 1)
+      {
+        show_progress_bar();
+        start_fake_progress();
+      }
+  }
+
+fun display_password_callback (prompt, bullets)
+  {
+    global.password_shown = 1;
+
+    stop_fake_progress();
+    hide_progress_bar();
+    global.max_progress = 0.0;
+    global.fake_progress = 0.0;
+    global.real_progress = 0.0;
+    show_password_dialog();
+
+    for (index = 0; bullet.sprites[index]; index++)
+      bullet.sprites[index].SetOpacity(0);
+
+    max_bullets = 21;
+    bullets_to_show = bullets;
+    if (bullets_to_show > max_bullets)
+      bullets_to_show = max_bullets;
+
+    for (index = 0; index < bullets_to_show; index++)
+      {
+        if (!bullet.sprites[index])
+          {
+            scaled_bullet = bullet.image.Scale(7, 7);
+            bullet.sprites[index] = Sprite(scaled_bullet);
+            bullet.x = entry.x + 22 + index * (7 + 5);
+            bullet.y = entry.y + entry.image.GetHeight() / 2 - 3.5;
+            bullet.sprites[index].SetPosition(bullet.x, bullet.y, 10002);
+          }
+
+        bullet.sprites[index].SetOpacity(1);
+      }
+  }
+
+Plymouth.SetDisplayNormalFunction(display_normal_callback);
+Plymouth.SetDisplayPasswordFunction(display_password_callback);
+
+progress_box.image = Image("progress_box.png");
+progress_box.sprite = Sprite(progress_box.image);
+
+progress_box.x = Window.GetWidth() / 2 - progress_box.image.GetWidth() / 2;
+progress_box.y = Window.GetHeight() / 2 - progress_box.image.GetHeight() / 2;
+progress_box.sprite.SetPosition(progress_box.x, progress_box.y, 0);
+progress_box.sprite.SetOpacity(0);
+
+progress_bar.original_image = Image("progress_bar.png");
+progress_bar.sprite = Sprite();
+progress_bar.image = progress_bar.original_image.Scale(1, progress_bar.original_image.GetHeight());
+
+progress_bar.x = Window.GetWidth() / 2 - progress_bar.original_image.GetWidth() / 2;
+progress_bar.y = progress_box.y + (progress_box.image.GetHeight() - progress_bar.original_image.GetHeight()) / 2;
+progress_bar.sprite.SetPosition(progress_bar.x, progress_bar.y, 1);
+progress_bar.sprite.SetOpacity(0);
+
+fun progress_callback (duration, progress)
+  {
+    global.real_progress = progress;
+
+    if (progress > global.fake_progress_limit)
+      {
+        stop_fake_progress();
+        update_progress_bar(progress);
+      }
+  }
+
+Plymouth.SetBootProgressFunction(progress_callback);
+
+fun quit_callback ()
+  {
+  }
+
+Plymouth.SetQuitFunction(quit_callback);
+
+message_sprite = Sprite();
+message_sprite.SetPosition(10, 10, 10000);
+
+fun display_message_callback (text)
+  {
+    my_image = Image.Text(text, 1, 1, 1);
+    message_sprite.SetImage(my_image);
+    message_sprite.SetOpacity(1);
+  }
+
+fun hide_message_callback (text)
+  {
+    message_sprite.SetOpacity(0);
+  }
+
+Plymouth.SetDisplayMessageFunction(display_message_callback);
+Plymouth.SetHideMessageFunction(hide_message_callback);

@@ -1,0 +1,8 @@
+[Plymouth Theme]
+Name=DOOM
+Description=DOOM LUKS unlock and boot splash
+ModuleName=script
+
+[script]
+ImageDir=@themedir@
+ScriptFile=@themedir@/doom.script
