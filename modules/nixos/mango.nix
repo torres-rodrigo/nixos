@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ host, pkgs, ... }:
 
 {
   programs.mangowc = {
@@ -14,7 +14,7 @@
       comment = "Mango compositor managed by UWSM";
       extraArgs = [
         "-c"
-        "/home/r/.config/mango/config.conf"
+        "${host.userHome}/.config/mango/config.conf"
       ];
     };
   };

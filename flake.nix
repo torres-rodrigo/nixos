@@ -15,24 +15,22 @@
       };
     };
 
-    outputs = inputs@{ self, nixpkgs, home-manager, sops-nix, ... }:
+    outputs = { nixpkgs, home-manager, ... }:
       let
-        system = "x86_64-linux";
-        username = "r";
-        hostname = "PC";
-        stateVersion = "26.05";
+        defaultSystem = "x86_64-linux";
       in
       {
         nixosConfigurations = import ./flake/nixos-configurations.nix {
-          inherit inputs self nixpkgs home-manager sops-nix system hostname username stateVersion;
+          inherit nixpkgs home-manager;
         };
 
         packages = import ./flake/packages.nix {
-          inherit inputs self nixpkgs system;
+          system = defaultSystem;
         };
 
         devShells = import ./flake/dev-shells.nix {
-          inherit inputs self nixpkgs system;
+          inherit nixpkgs;
+          system = defaultSystem;
         };
       };
 }

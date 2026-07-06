@@ -1,4 +1,4 @@
-{ stateVersion, username, ... }:
+{ host, stateVersion, username, ... }:
 
 {
   home-manager = {
@@ -7,9 +7,9 @@
 
     extraSpecialArgs = {
       inherit stateVersion username;
-      repoPath = "/home/r/projects/nixos";
+      repoPath = host.repoPath;
     };
 
-    users.${username} = import ../../users/r/home.nix;
+    users.${username} = import host.home;
   };
 }

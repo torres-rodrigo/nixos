@@ -1,4 +1,4 @@
-{ lib, pkgs, username, ... }:
+{ host, lib, pkgs, username, ... }:
 
 {
   services.greetd = {
@@ -12,7 +12,7 @@
           "--"
           "/run/current-system/sw/bin/mango"
           "-c"
-          "/home/${username}/.config/mango/config.conf"
+          "${host.userHome}/.config/mango/config.conf"
         ];
         user = username;
       };

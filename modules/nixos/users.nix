@@ -1,4 +1,4 @@
-{ pkgs, username, ... }:
+{ host, pkgs, username, ... }:
 
 {
   users.mutableUsers = true;
@@ -7,10 +7,14 @@
     isNormalUser = true;
     uid = 1000;
     description = username;
+    home = host.userHome;
     shell = pkgs.zsh;
     extraGroups = [
       "audio"
       "networkmanager"
+      "seat"
+      "video"
+      "render"
       "wheel"
     ];
   };
