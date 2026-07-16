@@ -2,6 +2,7 @@
 
 {
   environment.systemPackages = with pkgs; [
+    age # Modern file encryption tool
     alsa-utils # ALSA command-line utilities
     bat # cat replacement
     btrfs-progs # Btrfs filesystem CLI utilities
@@ -17,6 +18,7 @@
     ffmpeg # Media processing
     fzf # Fuzzy finder
     git # Distributed version control system
+    gnupg # OpenPGP encryption and signing tools
     jq # JSON processor and pretty-printer
     lazygit # Terminal UI for Git
     less # Pager
