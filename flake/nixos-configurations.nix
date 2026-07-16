@@ -1,7 +1,15 @@
-{ nixpkgs, home-manager, ... }:
+{
+  nixpkgs,
+  home-manager,
+  hostOverrides ? { },
+  extraModules ? [ ],
+  ...
+}:
 
 let
-  hosts = {
+  inherit (nixpkgs) lib;
+
+  baseHosts = {
     nixos = {
       system = "x86_64-linux";
       hostname = "PC";
@@ -13,6 +21,8 @@ let
       home = ../users/r/home.nix;
     };
   };
+
+  hosts = lib.recursiveUpdate baseHosts hostOverrides;
 
   mkHost = host:
     nixpkgs.lib.nixosSystem {
@@ -26,7 +36,7 @@ let
       modules = [
         home-manager.nixosModules.home-manager
         host.configuration
-      ];
+      ] ++ extraModules;
     };
 in
 {

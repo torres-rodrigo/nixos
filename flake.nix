@@ -28,6 +28,11 @@
           system = defaultSystem;
         };
 
+        apps = import ./flake/apps.nix {
+          inherit nixpkgs;
+          system = defaultSystem;
+        };
+
         devShells = import ./flake/dev-shells.nix {
           inherit nixpkgs;
           system = defaultSystem;
